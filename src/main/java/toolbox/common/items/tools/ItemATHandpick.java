@@ -31,6 +31,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -39,6 +40,7 @@ import toolbox.Toolbox;
 import toolbox.common.Config;
 import toolbox.common.materials.ModMaterials;
 
+@Optional.Interface(iface = "thaumcraft.api.items.IWarpingGear", modid = "thaumcraft")
 public class ItemATHandpick extends ItemPickaxe implements IWarpingGear, IHeadTool, IHaftTool, IHandleTool, IAdornedTool {
 
 	private String name = "handpick";
@@ -47,7 +49,7 @@ public class ItemATHandpick extends ItemPickaxe implements IWarpingGear, IHeadTo
 	protected static final UUID BLOCK_REACH_MODIFIER = UUID.fromString("FB233D1C-4190-4764-A02B-BDCE9785AC93");
 
 	public ItemATHandpick() {
-		super(ToolMaterial.WOOD);
+		super(ModMaterials.TOOL_MAT_TOOLBOX);
 
 		setRegistryName(name);
 		setUnlocalizedName(Toolbox.MODID + "." + name);

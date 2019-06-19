@@ -182,6 +182,10 @@ public class ModRecipes {
 				"after:minecraft:shapeless");
 		ForgeRegistries.RECIPES.register(new BookRecipe().setRegistryName(new ResourceLocation(Toolbox.MODID, "book")));
 
+		if (Config.ALLOW_ADORNMENT_REPLACEMENT) {
+			ForgeRegistries.RECIPES.register(new PartReplacementRecipe().setRegistryName(new ResourceLocation(Toolbox.MODID, "part_replacement")));
+		}
+		
 		initToolRecipes();
 
 		initMaterialItems();
@@ -334,6 +338,9 @@ public class ModRecipes {
 		}
 		for (ItemStack obsidian : OreDictionary.getOres("gemObsidian")) {
 			adornment_map.put(obsidian, ModMaterials.ADORNMENT_OBSIDIAN);
+		}
+		for (ItemStack aquamarine : OreDictionary.getOres("gemAquamarine")) {
+			adornment_map.put(aquamarine, ModMaterials.ADORNMENT_AQUAMARINE);
 		}
 	}
 

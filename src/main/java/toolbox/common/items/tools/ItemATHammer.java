@@ -37,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -45,6 +46,7 @@ import toolbox.Toolbox;
 import toolbox.common.Config;
 import toolbox.common.materials.ModMaterials;
 
+@Optional.Interface(iface = "thaumcraft.api.items.IWarpingGear", modid = "thaumcraft")
 public class ItemATHammer extends ItemPickaxe implements IWarpingGear, IHeadTool, IHaftTool, IHandleTool, IAdornedTool {
 
 	private String toolClass = "pickaxe";
@@ -52,7 +54,7 @@ public class ItemATHammer extends ItemPickaxe implements IWarpingGear, IHeadTool
 	public static final String DAMAGE_TAG = "Damage";
 	
 	public ItemATHammer() {
-		super(ToolMaterial.WOOD);
+		super(ModMaterials.TOOL_MAT_TOOLBOX);
 
 		setRegistryName(name);
 		setUnlocalizedName(Toolbox.MODID + "." + name);
@@ -224,7 +226,7 @@ public class ItemATHammer extends ItemPickaxe implements IWarpingGear, IHeadTool
 		if (!world.isRemote && player instanceof EntityPlayerMP) {
 
 			RayTraceResult rt = this.rayTrace(world, player, false);
-			if (rt.typeOfHit == RayTraceResult.Type.BLOCK) {
+			if (rt != null && rt.typeOfHit != null && rt.typeOfHit == RayTraceResult.Type.BLOCK) {
 				EnumFacing side = rt.sideHit;
 
 				List<BlockPos> extraBlocks = getExtraBlocks(world, rt, player, itemstack);
@@ -244,7 +246,7 @@ public class ItemATHammer extends ItemPickaxe implements IWarpingGear, IHeadTool
 						}
 					} else {
 						int xp = ForgeHooks.onBlockBreakEvent(world, ((EntityPlayerMP) player).interactionManager.getGameType(), (EntityPlayerMP) player, pos2);
-
+						
 						state.getBlock().onBlockHarvested(world, pos2, state, player);
 						this.onBlockDestroyed(itemstack, world, state, pos2, player);
 						if (state.getBlock().removedByPlayer(state, world, pos2, player, true)) {
